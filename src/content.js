@@ -11,11 +11,15 @@ export const content = {
   url: 'https://kakushin.dev/',
   title: 'Kakushin — open source, redrawn',
   description:
-    'Kakushin (革新) is a small open-source organization. We build tools and libraries that redraw the default.',
+    'Kakushin (革新) is a small open-source organization building tools and libraries that redraw the default. Hand-drawn, permissively licensed, and a work in progress by design.',
+  // Display name for search engines, social cards and the web manifest (the wordmark above is all caps).
+  orgName: 'Kakushin',
 
   kanji: '革新',
   kanjiReading: 'kakushin: innovation, reform',
   tagline: 'Redraw the default.',
+  // Alt text for the social preview image (public/og.png, regenerate with `npm run og`).
+  ogAlt: 'KAKUSHIN in sketchy white strokes on black, the tagline Redraw the default, an RPG-style menu, and a red hand-drawn 革新 seal.',
 
   about: [
     'Kakushin (革新) means reform: the act of redrawing something that already exists.',

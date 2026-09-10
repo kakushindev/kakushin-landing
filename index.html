@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{title}}</title>
     <meta name="description" content="{{description}}" />
+    <meta name="author" content="{{orgName}}" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#000000" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="{{url}}" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="{{name}}" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="{{orgName}}" />
     <meta property="og:title" content="{{title}}" />
     <meta property="og:description" content="{{description}}" />
     <meta property="og:url" content="{{url}}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="{{url}}og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{ogAlt}}" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{title}}" />
+    <meta name="twitter:description" content="{{description}}" />
+    <meta name="twitter:image" content="{{url}}og.png" />
+    <meta name="twitter:image:alt" content="{{ogAlt}}" />
+
+    <script type="application/ld+json">{{jsonld}}</script>
     <!-- Restore WHITE SPACE before first paint so there is no flash. -->
     <script>
       try {
@@ -48,7 +66,7 @@
       </nav>
 
       <section class="dialogue" id="about" aria-labelledby="about-speaker">
-        <span class="speaker" id="about-speaker">{{name}}</span>
+        <h2 class="speaker" id="about-speaker">{{name}}</h2>
         <wired-card class="box" elevation="2">
           <div class="box-text">
             {{about}}
