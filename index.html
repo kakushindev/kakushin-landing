@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="{{url}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{name}}" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{url}}" />
+    <meta name="twitter:card" content="summary" />
+    <!-- Restore WHITE SPACE before first paint so there is no flash. -->
+    <script>
+      try {
+        if (localStorage.getItem('kakushin-space') === 'white') {
+          document.documentElement.dataset.space = 'white';
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <main class="screen">
+      <header class="hero">
+        <div class="hero-text">
+          <h1 class="wordmark">{{name}}</h1>
+          <p class="tagline"><span class="type" id="tagline">{{tagline}}</span></p>
+        </div>
+        <div class="stamp" id="stamp" role="img" aria-label="{{kanji}}, {{kanjiReading}}" title="{{kanjiReading}}">
+          <svg class="stamp-ink" id="stamp-ink" viewBox="0 0 100 100" aria-hidden="true"></svg>
+          <span class="stamp-kanji" lang="ja" aria-hidden="true">{{kanji}}</span>
+        </div>
+      </header>
+
+      <wired-divider class="rule" elevation="2"></wired-divider>
+
+      <nav class="menu" id="menu" aria-label="Main">
+        <svg class="hand" viewBox="0 0 32 32" aria-hidden="true"></svg>
+        <ul class="menu-list">
+          {{menu}}
+        </ul>
+        <p class="hint" aria-hidden="true"><span class="type" id="hint"></span></p>
+      </nav>
+
+      <section class="dialogue" id="about" aria-labelledby="about-speaker">
+        <span class="speaker" id="about-speaker">{{name}}</span>
+        <wired-card class="box" elevation="2">
+          <div class="box-text">
+            {{about}}
+          </div>
+          <span class="continue" aria-hidden="true">▼</span>
+        </wired-card>
+      </section>
+
+      <footer class="options">
+        <div class="opt">
+          <wired-toggle id="space"></wired-toggle>
+          <span class="opt-label" id="space-label">WHITE SPACE</span>
+        </div>
+        <div class="opt">
+          <wired-checkbox id="sfx"><span class="opt-label">SFX</span></wired-checkbox>
+        </div>
+        <p class="fine">© {{year}} {{domain}}</p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+/* ── fonts ──────────────────────────────────────────────── */
+/* Zen Kurenaido, only the slices holding 革 (U+9769) and 新 (U+65B0).
+   Fontsource splits the family into ~120 unicode-range slices; the page
+   uses two glyphs, so it ships two files. */
+@font-face {
+  font-family: 'Zen Kurenaido';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('@fontsource/zen-kurenaido/files/zen-kurenaido-96-400-normal.woff2') format('woff2');
+  unicode-range: U+9769;
+}
+@font-face {
+  font-family: 'Zen Kurenaido';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('@fontsource/zen-kurenaido/files/zen-kurenaido-117-400-normal.woff2') format('woff2');
+  unicode-range: U+65B0;
+}
+
+/* ── palette & type ─────────────────────────────────────── */
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --select: #053d7c; /* menu selection blue */
+  --ink: #c8102e; /* hanko red */
+  --dim: #9ca3af;
+
+  --font-display: 'Cabin Sketch', 'Patrick Hand', 'Comic Sans MS', cursive;
+  --font-body: 'Patrick Hand', 'Segoe Print', 'Comic Sans MS', cursive, sans-serif;
+  --font-jp: 'Zen Kurenaido', 'Yomogi', 'Hiragino Kaku Gothic Pro', 'Noto Sans CJK JP', sans-serif;
+
+  /* Hand-drawn arrow cursors (ours, drawn for this page). */
+  --cursor-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 2.5 5.3 19.6 9.7 14.9 13.2 21.4 16.4 19.7 12.9 13.4 19.3 12.7Z' fill='%23fff' stroke='%23000' stroke-width='1.7' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+  --cursor-point: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 2.5 5.3 19.6 9.7 14.9 13.2 21.4 16.4 19.7 12.9 13.4 19.3 12.7Z' fill='%23c8102e' stroke='%23000' stroke-width='1.7' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, pointer;
+
+  color-scheme: dark;
+}
+html[data-space='white'] {
+  --bg: #fff;
+  --fg: #000;
+  color-scheme: light;
+}
+
+/* ── base ───────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+html {
+  background: var(--bg);
+  color: var(--fg);
+  cursor: var(--cursor-arrow);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  line-height: 1.5;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+a,
+button,
+.stamp,
+.opt,
+wired-toggle,
+wired-checkbox {
+  cursor: var(--cursor-point);
+}
+::selection {
+  background: var(--select);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px dashed var(--fg);
+  outline-offset: 3px;
+}
+/* Custom elements before wired-elements upgrades them: keep them out of view. */
+:not(:defined) {
+  visibility: hidden;
+}
+
+.screen {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vh, 6rem) 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+/* ── hero ───────────────────────────────────────────────── */
+.hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  flex-wrap: wrap;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.25rem, 2rem + 8vw, 6.75rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+.tagline {
+  margin: 0.75rem 0 0 0.15rem;
+  font-size: clamp(1rem, 0.8rem + 1.4vw, 1.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  min-height: 1.5em;
+}
+
+/* Typewriter: a hidden spacer keeps the layout while a clipped copy
+   widens in steps(n), one character per step. */
+.type {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.type-spacer {
+  visibility: hidden;
+}
+.type-text {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: type var(--type-duration, 0.9s) steps(var(--characterCount, 20), end) both;
+}
+@keyframes type {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The 革新 stamp: rough red frame drawn by sketch.js, kanji on top. */
+.stamp {
+  position: relative;
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: clamp(5.25rem, 14vw, 7rem);
+  aspect-ratio: 1;
+  container-type: inline-size;
+  transform: rotate(-7deg);
+  transition: transform 0.15s steps(2, end);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.stamp:hover {
+  transform: rotate(-4deg) scale(1.04);
+}
+.stamp:active {
+  transform: rotate(-9deg) scale(0.97);
+}
+.stamp-ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.stamp-kanji {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-jp);
+  font-size: 40cqw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  writing-mode: vertical-rl;
+  color: var(--ink);
+  text-shadow:
+    0 0 2px var(--bg),
+    0 0 2px var(--bg),
+    1px 1px 0 var(--bg),
+    -1px -1px 0 var(--bg);
+}
+
+.rule {
+  display: block;
+  margin: -0.5rem 0;
+}
+
+/* ── title-screen menu ──────────────────────────────────── */
+.menu {
+  position: relative;
+  padding-left: 2.9rem;
+}
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+.menu-list a {
+  display: inline-block;
+  padding: 0.1rem 0.75rem 0.15rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.55em;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  border: 2px solid transparent;
+}
+.menu-list a:hover,
+.menu-list a:focus-visible {
+  background: var(--select);
+  color: #fff;
+  outline: none;
+}
+.menu-list a:focus-visible {
+  border-color: currentColor;
+  border-style: dashed;
+}
+.menu-list a:active {
+  transform: translate(1px, 1px);
+}
+
+.hand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(var(--hand-y, 0px));
+  transition:
+    transform 0.14s steps(3, end),
+    opacity 0.2s;
+}
+.hand path[stroke='none'] {
+  fill: var(--bg);
+}
+.menu.is-active .hand {
+  opacity: 1;
+  animation: drift 0.5s linear infinite alternate;
+}
+@keyframes drift {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: -6px;
+  }
+}
+
+.hint {
+  margin: 0.7rem 0 0 0.75rem;
+  min-height: 1.5em;
+  font-size: 0.9em;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+/* ── dialogue box ───────────────────────────────────────── */
+.dialogue {
+  position: relative;
+  scroll-margin-top: 2rem;
+  margin-top: 0.5rem;
+  padding-top: 0.85em; /* room for the name tag to straddle the frame */
+}
+.box {
+  display: block;
+  position: relative;
+  padding: 1.5rem 1.6rem 2rem;
+}
+/* RPG name box: sits across the top edge of the dialogue window. */
+.speaker {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  z-index: 1;
+  display: inline-block;
+  padding: 0.05rem 0.75rem 0.1rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 0.95em;
+  letter-spacing: 0.14em;
+  /* RPG window double border: 1px fg, 1px bg, 2px fg. */
+  box-shadow:
+    0 0 0 1px var(--fg),
+    inset 0 0 0 1px var(--bg),
+    inset 0 0 0 3px var(--fg);
+}
+.box-text {
+  padding-top: 0.25rem;
+}
+.box-text p {
+  margin: 0 0 0.8em;
+}
+.box-text p:last-child {
+  margin-bottom: 0;
+}
+.continue {
+  position: absolute;
+  right: 1.15rem;
+  bottom: 0.55rem;
+  font-size: 0.8em;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ── options (footer) ───────────────────────────────────── */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  font-size: 0.95em;
+  letter-spacing: 0.1em;
+}
+.opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+wired-toggle {
+  --wired-toggle-on-color: var(--ink);
+  --wired-toggle-off-color: var(--dim);
+}
+.fine {
+  margin: 0 0 0 auto;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+/* ── motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .type-text,
+  .menu.is-active .hand,
+  .continue {
+    animation: none;
+  }
+  .hand,
+  .stamp {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .fine {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
