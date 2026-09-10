@@ -1,10 +1,29 @@
 # kakushin.dev
 
-Landing page for **Kakushin (革新)**, an open-source project organization.
+Landing page for **Kakushin (革新)**, a small open-source project organization.
+
+**Live: https://kakushin.dev**
+
+![The Kakushin landing page: a sketched KAKUSHIN wordmark on black, a red 革新 seal, and an RPG-style menu](docs/screenshot.png)
+
+Kakushin means reform, the act of redrawing something that already exists. The page
+is built to look the part: everything you see is drawn at runtime with rough, wobbling
+strokes rather than shipped as images.
 
 Hand-drawn look built with [wired-elements](https://wiredjs.com) and [Rough.js](https://roughjs.com),
-in the spirit of a certain black-and-white RPG title screen. No framework, no runtime CDN:
-fonts and libraries are bundled by Vite.
+in the spirit of a certain black-and-white RPG title screen. No framework and no runtime
+CDN. Fonts and libraries are bundled by Vite, so the page loads entirely from its own origin.
+
+## What is in here
+
+| Path | What it holds |
+| --- | --- |
+| `src/content.js` | Every word on the page. Start here. |
+| `index.html` | Static skeleton with `{{placeholders}}` and the meta tags. |
+| `src/style.css` | Palette, layout, the RPG dialogue box, keyframes. |
+| `src/sketch.js` | The 革新 seal and the pointing hand, drawn with Rough.js. |
+| `src/main.js` | Behaviour: typewriter, menu, theme toggle, opt-in sound. |
+| `vite.config.js` | A small plugin that fills the placeholders at build time. |
 
 ## Develop
 
@@ -21,20 +40,18 @@ Requires Node 22.12 or newer.
 
 Everything the page says is in [`src/content.js`](src/content.js): name, tagline, about text,
 menu links and their hover hints. `{{placeholders}}` in `index.html` are filled from that file at
-build time by the small plugin in `vite.config.js`, so the shipped HTML is fully static.
+build time by the small plugin in `vite.config.js`, so the shipped HTML is fully static and still
+readable by crawlers with JavaScript disabled.
 
-Layout and colours live in `src/style.css`; the drawings (the 革新 stamp, the menu hand) in
-`src/sketch.js`; behaviour in `src/main.js`.
+## Details worth knowing
 
-## Deploy
-
-Any static host works. For Cloudflare Pages:
-
-| Setting          | Value           |
-| ---------------- | --------------- |
-| Build command    | `npm run build` |
-| Output directory | `dist`          |
-| Node version     | `22`            |
+- **WHITE SPACE / BLACK SPACE** toggle in the footer inverts the page and is remembered per browser.
+- **SFX** is off by default. When on, menu blips are synthesized with Web Audio. No audio files ship.
+- Every animation is disabled under `prefers-reduced-motion`.
+- Arrow keys walk the menu and Enter follows the link. The menu items are real anchors.
+- Hovering a sketched element re-rolls its seed, so the ink is redrawn slightly differently.
+- Fonts are self-hosted via Fontsource: Cabin Sketch, Patrick Hand, Zen Kurenaido, all under the
+  SIL Open Font License. Only the two Zen Kurenaido subset slices holding 革 and 新 are shipped.
 
 ## Why these versions
 
@@ -42,12 +59,23 @@ Any static host works. For Cloudflare Pages:
   renamed in Rough.js 4.5, so `roughjs` is pinned to 4.3.1 (one copy, shared with our own drawings).
 - `roughjs` is imported from `roughjs/bundled/rough.esm.js` because the package's browser entry is a
   UMD build without an ES default export.
-- Do not add `lit` directly; wired-elements brings its own Lit 2 and a second copy would break dedupe.
+- Do not add `lit` directly. wired-elements brings its own Lit 2 and a second copy would break dedupe.
 
-## Small things
+## Deploy
 
-- **WHITE SPACE / BLACK SPACE** toggle in the footer inverts the page and is remembered per browser.
-- **SFX** is off by default. When on, menu blips are synthesized with Web Audio; no audio files ship.
-- Every animation is disabled under `prefers-reduced-motion`.
-- Arrow keys walk the menu, Enter follows the link.
-- Fonts are self-hosted via Fontsource: Cabin Sketch, Patrick Hand, Zen Kurenaido (SIL Open Font License).
+The build output is a plain folder of static files, so any static host works: run
+`npm run build` and serve `dist/`.
+
+**kakushin.dev** is served by Cloudflare Pages, built from this repository's `main` branch:
+
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Build command    | `npm run build` |
+| Output directory | `dist`          |
+| Node version     | `22`            |
+
+Pushing to `main` deploys.
+
+## Licence
+
+To be decided.
