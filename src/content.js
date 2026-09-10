@@ -11,7 +11,7 @@ export const content = {
   url: 'https://kakushin.dev/',
   title: 'Kakushin — open source, redrawn',
   description:
-    'Kakushin (革新) is a small open-source organization building tools and libraries that redraw the default. Hand-drawn, permissively licensed, and a work in progress by design.',
+    'Kakushin (革新) is a small open-source organization building tools and libraries that redraw the default. Hand-drawn and permissively licensed.',
   // Display name for search engines, social cards and the web manifest (the wordmark above is all caps).
   orgName: 'Kakushin',
 
