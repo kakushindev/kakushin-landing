@@ -27,7 +27,7 @@ export const content = {
   // out under the menu when an item is pointed at.
   links: [
     { label: 'ABOUT', href: '#about', hint: 'who we are, and why the name' },
-    { label: 'GITHUB', href: 'https://github.com/al-dioooo', hint: 'code, issues, pull requests' },
+    { label: 'GITHUB', href: 'https://github.com/kakushindev', hint: 'code, issues, pull requests' },
     // TODO: placeholder address. Replace with the real contact.
     { label: 'EMAIL', href: 'mailto:hello@kakushin.dev', hint: 'hello@kakushin.dev' },
   ],
